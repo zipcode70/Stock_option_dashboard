@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Options Indicators Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Options indicators dashboard logo">
+        <circle cx="20" cy="20" r="19" stroke="#22d3ee" stroke-width="1.5" opacity="0.35"/>
+        <path d="M8 30 L14 18 L20 24 L26 12 L32 20" stroke="#22d3ee" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="20" cy="20" r="8" stroke="#fbbf24" stroke-width="1.6" opacity="0.55" stroke-dasharray="2 3"/>
+      </svg>
+      <div class="title-block">
+        <h1 id="pageHeading">Options Indicators Dashboard</h1>
+        <p>Pre-trade checklist for a single ticker &middot; <span id="asOfLabel">loading&hellip;</span></p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="ticker-select">
+        <input id="tickerInput" type="text" placeholder="Ticker (e.g. AAPL)" autocomplete="off" spellcheck="false" />
+        <button id="loadTickerBtn">Load</button>
+      </div>
+      <span id="updatedAt">Last refreshed: &mdash;</span>
+    </div>
+  </div>
+
+  <div id="loadError" class="load-error hidden"></div>
+
+  <div class="spot-strip" id="spotStrip">
+    <div class="spot-main">
+      <span class="spot-ticker" id="spotTicker">&mdash;</span>
+      <span class="spot-price" id="spotPrice">&mdash;</span>
+      <span class="spot-change" id="spotChange">&mdash;</span>
+    </div>
+    <div class="spot-tags" id="spotTags"></div>
+  </div>
+
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="volatility">Volatility Metrics</button>
+    <button class="tab-btn" data-tab="technicals">Price / Technical</button>
+    <button class="tab-btn" data-tab="liquidity">Liquidity / Positioning</button>
+    <button class="tab-btn" data-tab="events">Events</button>
+    <button class="tab-btn" data-tab="regime">Market Regime</button>
+  </nav>
+
+  <main id="tabContent">
+    <!-- VOLATILITY TAB -->
+    <section class="tab-panel active" id="tab-volatility">
+      <div class="grid grid-4">
+        <div class="card kpi-card">
+          <div class="kpi-label">ATM Implied Volatility</div>
+          <div class="kpi-value" id="v-atmIv">&mdash;</div>
+          <div class="kpi-sub" id="v-ivRichness">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">25&Delta;-ish Skew (Put &minus; Call)</div>
+          <div class="kpi-value" id="v-skew">&mdash;</div>
+          <div class="kpi-sub">OTM put IV minus OTM call IV, same expiry</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Expected Move (to expiry)</div>
+          <div class="kpi-value" id="v-expMove">&mdash;</div>
+          <div class="kpi-sub" id="v-expMovePct">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Term Structure</div>
+          <div class="kpi-value" id="v-term">&mdash;</div>
+          <div class="kpi-sub" id="v-termDetail">&mdash;</div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-title">Implied vs. Realized Volatility</div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="chartIvHv"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Realized Volatility (annualized)</div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="chartRv"></canvas></div>
+        </div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card mini-card">
+          <div class="kpi-label">Primary Expiration</div>
+          <div class="mini-value" id="v-primaryExp">&mdash;</div>
+        </div>
+        <div class="card mini-card">
+          <div class="kpi-label">Secondary Expiration</div>
+          <div class="mini-value" id="v-secondaryExp">&mdash;</div>
+        </div>
+        <div class="card mini-card">
+          <div class="kpi-label">HV20 1Y Percentile</div>
+          <div class="mini-value" id="v-hvPercentile">&mdash;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNICALS TAB -->
+    <section class="tab-panel" id="tab-technicals">
+      <div class="grid grid-4">
+        <div class="card kpi-card">
+          <div class="kpi-label">Trend</div>
+          <div class="kpi-value" id="t-trend">&mdash;</div>
+          <div class="kpi-sub" id="t-trendDetail">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">RSI (14)</div>
+          <div class="kpi-value" id="t-rsi">&mdash;</div>
+          <div class="kpi-sub" id="t-rsiLabel">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">MACD Cross</div>
+          <div class="kpi-value" id="t-macdCross">&mdash;</div>
+          <div class="kpi-sub" id="t-macdDetail">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">ATR (14)</div>
+          <div class="kpi-value" id="t-atr">&mdash;</div>
+          <div class="kpi-sub" id="t-atrPct">&mdash;</div>
+        </div>
+      </div>
+      <div class="grid grid-1">
+        <div class="card">
+          <div class="card-title">Price with SMA20/50/200, Bollinger Bands, Trend Line &amp; Volume</div>
+          <div class="chart-wrap" style="height:320px;"><canvas id="chartPrice"></canvas></div>
+          <div class="chart-wrap" style="height:90px; margin-top: 2px;"><canvas id="chartVolume"></canvas></div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-title">Key Support &amp; Resistance</div>
+          <div class="wall-display" id="srDisplay"></div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">60-Day Trend Line</div>
+          <div class="kpi-value" id="t-trendLineDir">&mdash;</div>
+          <div class="kpi-sub" id="t-trendLineDetail">&mdash;</div>
+        </div>
+      </div>
+      <div class="grid grid-1">
+        <div class="card">
+          <div class="card-title">RSI (14) with Overbought / Oversold Zones</div>
+          <div class="chart-wrap" style="height:180px;"><canvas id="chartRsi"></canvas></div>
+        </div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card mini-card">
+          <div class="kpi-label">Bollinger %B</div>
+          <div class="mini-value" id="t-percentB">&mdash;</div>
+        </div>
+        <div class="card mini-card">
+          <div class="kpi-label">Volume vs 20d Avg</div>
+          <div class="mini-value" id="t-volRatio">&mdash;</div>
+        </div>
+        <div class="card mini-card">
+          <div class="kpi-label">52-Week Range</div>
+          <div class="mini-value" id="t-52wRange">&mdash;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIQUIDITY TAB -->
+    <section class="tab-panel" id="tab-liquidity">
+      <div class="grid grid-4">
+        <div class="card kpi-card">
+          <div class="kpi-label">Put/Call OI Ratio</div>
+          <div class="kpi-value" id="l-pcOi">&mdash;</div>
+          <div class="kpi-sub" id="l-oiTotals">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Put/Call Volume Ratio</div>
+          <div class="kpi-value" id="l-pcVol">&mdash;</div>
+          <div class="kpi-sub" id="l-volTotals">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Avg ATM Bid-Ask Spread</div>
+          <div class="kpi-value" id="l-spread">&mdash;</div>
+          <div class="kpi-sub">Within &plusmn;5% of spot, primary expiry</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Short % of Float</div>
+          <div class="kpi-value" id="l-shortFloat">&mdash;</div>
+          <div class="kpi-sub" id="l-daysToCover">&mdash;</div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-title">Open Interest by Side</div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="chartOi"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Max OI Strikes (Call Wall / Put Wall)</div>
+          <div class="wall-display" id="wallDisplay"></div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card mini-card">
+          <div class="kpi-label">30-Day Avg Daily Volume</div>
+          <div class="mini-value" id="l-avgVolume">&mdash;</div>
+        </div>
+        <div class="card mini-card">
+          <div class="kpi-label">Expirations Used (&le;45 DTE)</div>
+          <div class="mini-value small-list" id="l-expirations">&mdash;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS TAB -->
+    <section class="tab-panel" id="tab-events">
+      <div class="grid grid-3">
+        <div class="card kpi-card">
+          <div class="kpi-label">Next Earnings</div>
+          <div class="kpi-value" id="e-earningsDate">&mdash;</div>
+          <div class="kpi-sub" id="e-earningsDetail">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Next Ex-Dividend (est.)</div>
+          <div class="kpi-value" id="e-exDiv">&mdash;</div>
+          <div class="kpi-sub" id="e-divYield">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Next FOMC Decision</div>
+          <div class="kpi-value" id="e-fomc">&mdash;</div>
+          <div class="kpi-sub" id="e-fomcDetail">&mdash;</div>
+        </div>
+      </div>
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-title">Past Earnings Moves</div>
+          <div class="chart-wrap" style="height:220px;"><canvas id="chartEarnings"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Upcoming FOMC Meetings</div>
+          <div id="fomcList" class="event-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGIME TAB -->
+    <section class="tab-panel" id="tab-regime">
+      <div class="grid grid-4">
+        <div class="card kpi-card">
+          <div class="kpi-label">VIX Level</div>
+          <div class="kpi-value" id="r-vix">&mdash;</div>
+          <div class="kpi-sub" id="r-vixPercentile">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">VIX Term Structure</div>
+          <div class="kpi-value" id="r-vixTerm">&mdash;</div>
+          <div class="kpi-sub" id="r-vix3m">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Broad Market Trend</div>
+          <div class="kpi-value" id="r-marketTrend">&mdash;</div>
+          <div class="kpi-sub" id="r-spyDetail">&mdash;</div>
+        </div>
+        <div class="card kpi-card">
+          <div class="kpi-label">Beta to SPY</div>
+          <div class="kpi-value" id="r-beta">&mdash;</div>
+          <div class="kpi-sub" id="r-corr">&mdash;</div>
+        </div>
+      </div>
+      <div class="grid grid-1">
+        <div class="card">
+          <div class="card-title">Sector ETF Relative Strength vs SPY</div>
+          <div class="chart-wrap" style="height:200px;"><canvas id="chartSector"></canvas></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Data via Yahoo Finance (yfinance). For research and education only &mdash; not investment advice. Ticker loaded manually before each run.</p>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
