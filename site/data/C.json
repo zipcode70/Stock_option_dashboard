@@ -4,64 +4,92 @@
     "company_name": "Citigroup Inc.",
     "sector": "Financial Services",
     "as_of_date": "2026-09-14",
-    "generated_at_utc": "2026-09-15T00:45:54.982833+00:00",
-    "spot": null,
+    "generated_at_utc": "2026-09-15T02:34:51.417466+00:00",
+    "spot": 136.17999267578125,
     "market_cap": 228433330176
   },
   "volatility": {
     "primary_expiration": "2026-10-09",
     "secondary_expiration": "2026-10-30",
-    "secondary_atm_iv_pct": null,
-    "term_structure_label": null,
-    "atm_iv_pct": null,
-    "otm_put_iv_pct": null,
-    "otm_call_iv_pct": null,
-    "skew_pct_pts": null,
-    "expected_move_dollars": null,
-    "expected_move_pct": null,
-    "realized_vol_10d_pct": null,
-    "realized_vol_20d_pct": null,
-    "realized_vol_30d_pct": null,
-    "realized_vol_60d_pct": null,
-    "realized_vol_20d_percentile_1y": null
+    "secondary_atm_iv_pct": 39.368282104492195,
+    "term_structure_label": "Contango (calm)",
+    "atm_iv_pct": 32.73382696533203,
+    "otm_put_iv_pct": 36.01138208007812,
+    "otm_call_iv_pct": 34.76627734375,
+    "skew_pct_pts": 1.2451047363281234,
+    "expected_move_dollars": 8.525,
+    "expected_move_pct": 6.2600972672222195,
+    "realized_vol_10d_pct": 20.915396531595206,
+    "realized_vol_20d_pct": 22.815002884271486,
+    "realized_vol_30d_pct": 22.400999703632742,
+    "realized_vol_60d_pct": 27.50187358238963,
+    "realized_vol_20d_percentile_1y": 20.346320346320347,
+    "iv_minus_hv20_pts": 9.918824081060542,
+    "iv_richness_label": "Rich (premium selling favored)"
   },
   "technicals": {
-    "spot": null,
-    "day_change_pct": null,
-    "sma20": null,
-    "sma50": null,
-    "sma200": null,
-    "pct_vs_sma20": null,
-    "pct_vs_sma50": null,
-    "pct_vs_sma200": null,
-    "trend_label": "Mixed / transitional",
-    "rsi14": 59.6802874277418,
+    "spot": 136.17999267578125,
+    "day_change_pct": -1.901753716430556,
+    "sma20": 134.84399795532227,
+    "sma50": 134.96160018920898,
+    "sma200": 124.14969982147217,
+    "pct_vs_sma20": 0.9907706243637469,
+    "pct_vs_sma50": 0.9027697395882597,
+    "pct_vs_sma200": 9.69015057757586,
+    "trend_label": "Uptrend",
+    "rsi14": 51.849401381988315,
     "rsi_label": "Neutral",
-    "macd": 0.8750023106883305,
-    "macd_signal": 0.36313917657339356,
-    "macd_hist": 0.5118631341149369,
+    "macd": 0.7976275515497662,
+    "macd_signal": 0.3476642247456807,
+    "macd_hist": 0.44996332680408546,
     "macd_cross": "Bullish",
-    "bollinger_upper": null,
-    "bollinger_lower": null,
-    "percent_b": null,
-    "atr14": 3.2734521555355416,
-    "atr_pct": null,
-    "volume_today": 15374066.0,
-    "volume_avg20": 8664203.3,
-    "volume_ratio": 1.774435048171134,
+    "bollinger_upper": 140.70014122581162,
+    "bollinger_lower": 128.9878546848329,
+    "percent_b": 0.6140677967350469,
+    "atr14": 3.273094663906077,
+    "atr_pct": 2.40350627107074,
+    "volume_today": 15650200.0,
+    "volume_avg20": 8678010.0,
+    "volume_ratio": 1.8034318927956985,
     "high_52w": 145.6699981689453,
     "low_52w": 93.93000030517578,
-    "pct_from_52w_high": null,
-    "pct_from_52w_low": null,
-    "resistance_levels": [],
-    "support_levels": [],
+    "pct_from_52w_high": -6.514728916353615,
+    "pct_from_52w_low": 44.980296213495684,
+    "resistance_levels": [
+      {
+        "level": 139.5633341471354,
+        "touches": 3
+      },
+      {
+        "level": 144.5,
+        "touches": 2
+      },
+      {
+        "level": 147.875,
+        "touches": 2
+      }
+    ],
+    "support_levels": [
+      {
+        "level": 126.89999898274739,
+        "touches": 3
+      },
+      {
+        "level": 129.90499877929688,
+        "touches": 2
+      },
+      {
+        "level": 123.91999816894531,
+        "touches": 2
+      }
+    ],
     "trend_line": {
       "start_date": "2026-06-18",
-      "start_value": 139.69608627577958,
-      "end_date": "2026-09-11",
-      "end_value": 132.79476181288885,
+      "start_value": 139.58502359025468,
+      "end_date": "2026-09-14",
+      "end_value": 132.90364345279542,
       "window_days": 60,
-      "pct_change_over_window": -4.940241811260589,
+      "pct_change_over_window": -4.7866024345649985,
       "direction": "Downtrend"
     },
     "price_series": [
@@ -1499,11 +1527,11 @@
       },
       {
         "date": "2026-09-14",
-        "close": null,
-        "volume": 15374066.0,
-        "bollinger_upper": null,
-        "bollinger_lower": null,
-        "rsi": 59.6802874277418
+        "close": 136.17999267578125,
+        "volume": 15650200.0,
+        "bollinger_upper": 140.70014122581162,
+        "bollinger_lower": 128.9878546848329,
+        "rsi": 51.849401381988315
       }
     ]
   },
@@ -1518,7 +1546,7 @@
     "top_call_oi": 11836.0,
     "top_put_oi_strike": 120.0,
     "top_put_oi": 13575.0,
-    "avg_atm_spread_pct": null,
+    "avg_atm_spread_pct": 25.00000352569572,
     "near_term_expirations_used": [
       "2026-09-18",
       "2026-09-25",
@@ -1527,7 +1555,7 @@
       "2026-10-16",
       "2026-10-23"
     ],
-    "avg_daily_volume_30d": 8637795.533333333,
+    "avg_daily_volume_30d": 8647000.0,
     "short_percent_of_float_pct": 0.029999999000000003,
     "short_ratio_days_to_cover": 0.06
   },
@@ -1560,7 +1588,7 @@
     "last_ex_dividend_date": "2026-08-03",
     "estimated_next_ex_dividend_date": "2026-11-02",
     "days_to_next_ex_dividend": 49,
-    "dividend_yield_pct": null,
+    "dividend_yield_pct": 1.9679836570270437,
     "upcoming_fomc_meetings": [
       {
         "range": "Sep 15-16, 2026",
@@ -1587,18 +1615,18 @@
     "vix_1y_percentile": 49.01185770750988,
     "vix3m_level": 19.280000686645508,
     "vix_term_structure_label": "Contango (calm)",
-    "spy_price": null,
-    "spy_sma50": null,
-    "spy_sma200": null,
-    "market_trend_label": "Mixed / choppy market",
+    "spy_price": 760.8800048828125,
+    "spy_sma50": 758.9384008789062,
+    "spy_sma200": 714.6947003173829,
+    "market_trend_label": "Broad market uptrend",
     "beta": 1.097,
     "beta_source": "reported",
-    "correlation_to_spy_60d": 0.49269248646319314,
+    "correlation_to_spy_60d": 0.5225168296237412,
     "sector": "Financial Services",
     "sector_etf": "XLF",
-    "sector_return_1m_pct": null,
-    "sector_return_3m_pct": null,
-    "sector_vs_spy_1m_pct": null,
-    "sector_vs_spy_3m_pct": null
+    "sector_return_1m_pct": -2.1112248157784674,
+    "sector_return_3m_pct": 6.91788266995339,
+    "sector_vs_spy_1m_pct": 0.07420222866151294,
+    "sector_vs_spy_3m_pct": 4.338845948306935
   }
 }
